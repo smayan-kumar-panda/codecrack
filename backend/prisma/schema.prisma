@@ -1,0 +1,167 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String?
+  email     String   @unique
+  image     String?
+  role      UserRole @default(USER)
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  //relationship
+  problems      Problem[] // problem attribute with a array of problems which the user solved 
+  // the problem attribute can vary from person to person
+  submission    Submission[]
+  problemSolved ProblemSolved[]
+  playlist      playlist[] // a user can have multiple playlists
+}
+
+model Problem {
+  id          String     @id @default(uuid())
+  title       String
+  description String
+  difficulty  Difficulty @default(MEDIUM)
+  tags        String[] // ["tag1","tag2","tag3"]
+  userId      String // used in relations and refers to the user who created the problem
+  examples    Json
+  constraints String
+  hints       String?
+  editorial   String?
+
+  testcases         Json
+  codeSnippet       Json
+  referenceSolution Json
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  //relationship
+  user       User            @relation(fields: [userId], references: [id], onDelete: Cascade) //the user id field of Problems refers to the id field of User  
+  // the problem attribute connected to specifc user
+  submission Submission[] // kitni baar submission kiya hai yeh problem
+  solvedBy   ProblemSolved[] // kon submit kiya hai yeh problem
+
+  problemsInPlaylist ProblemsinPlaylist[] // a single problem can be found in multiple playlists but only once not duplicates
+}
+
+model Submission {
+  id            String  @id @default(uuid())
+  userId        String
+  problemId     String
+  sourceCode    Json
+  language      String
+  stdin         String?
+  stdout        String?
+  stderr        String?
+  compileOutput String
+  status        String
+  memory        String?
+  time          String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade) // konsa user submit kr rha hai
+  problem Problem @relation(fields: [problemId], references: [id], onDelete: Cascade) // konsa problem submit kr rha hai
+
+  testCases TestCaseResult[]
+}
+
+model TestCaseResult {
+  id            String  @id @default(uuid())
+  submissionId  String
+  testCase      Int
+  passed        Boolean
+  stdout        String?
+  expected      String
+  stderr        String?
+  compileOutput String?
+  status        String
+  memory        String?
+  time          String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  submission Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+
+  @@index([submissionId]) //each testcase is indexed with its submission
+}
+
+model ProblemSolved {
+  id        String @id @default(uuid())
+  userId    String
+  problemId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  problem Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, problemId]) // so that user's correctly solved problem is stored in db 1 time 
+}
+
+model playlist {
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+  userId      String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // 1 playlist can have mutliple problems
+  problems ProblemsinPlaylist[]
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([name, userId]) // unique playlist names per user
+}
+
+model ProblemsinPlaylist {
+  id         String @id @default(uuid())
+  playlistId String
+  problemId  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  playlist playlist @relation(fields: [playlistId], references: [id], onDelete: Cascade)
+  problem  Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)
+
+  @@unique([playlistId, problemId])
+}
+
+//* to see the data and tables in the db "npx prisma studio"
+//after doing this changes do 
+//npx prisma generate
+//npx prisma migrate dev
+//npx prisma db push
