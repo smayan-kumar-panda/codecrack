@@ -63,7 +63,7 @@ Whether you’re prepping for interviews or just love solving problems, LeetLab 
 
 ---
 
-## 🌟 Why LeetLab?
+## 🌟 Why CodeCrack?
 
 - **Modern, modular codebase** for easy extension and maintenance.
 - **Rich feature set** for both users and admins.
