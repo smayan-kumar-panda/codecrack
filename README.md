@@ -1,6 +1,6 @@
 # CodeCrack 🚀
 
-Welcome to **CodeCrack** – your all-in-one coding practice platform!  
+Welcome to **CodeCrack** – your all-in-one coding practice platform! ,this is a code execution platform to solve DSA problems with ease.
 This project is designed to help users practice coding problems, manage playlists, submit solutions, and track their progress, all with a modern backend built on Node.js, Express, and Prisma.  
 Whether you’re prepping for interviews or just love solving problems, LeetLab has you covered! 🎯
 
