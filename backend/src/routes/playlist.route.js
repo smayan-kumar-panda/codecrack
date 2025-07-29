@@ -1,5 +1,5 @@
 import express from "express"
-import { isLoggedIn } from "../middlewares/auth.middleware"
+import { isLoggedIn } from "../middlewares/auth.middleware.js"
 import {getAllPlaylists,getPlaylistById,createPlaylist,addProbleminPlaylist,deletePlaylist,removeProblemfromPlaylist} from "../controllers/playlist.controller.js"
 
 
