@@ -12,14 +12,17 @@
   "dependencies": {
     "@hookform/resolvers": "^5.2.0",
     "@tailwindcss/vite": "^4.1.11",
+    "axios": "^1.11.0",
     "daisyui": "^5.0.47",
     "lucide-react": "^0.528.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.61.1",
+    "react-hot-toast": "^2.5.2",
     "react-router-dom": "^7.7.1",
     "tailwindcss": "^4.1.11",
-    "zod": "^4.0.10"
+    "zod": "^4.0.10",
+    "zustand": "^5.0.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.30.1",

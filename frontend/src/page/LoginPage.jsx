@@ -127,10 +127,9 @@ const LoginPage = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="btn border-lime-900 border-2 w-full
-              hover:bg-lime-700"
-            >
-              SignUp
+              className="btn border-3 w-full btn-soft btn-success"
+            > 
+              Login
             </button>
           </form>
 
@@ -138,7 +137,7 @@ const LoginPage = () => {
           <div className="text-center">
             <p className="text-base-content/60">
               Don't have an account?{" "}
-              <Link to="/signup" className="link link-primary text-lime-500">
+              <Link to="/signup" className="link link-hover link-primary text-lime-500">
                 Signup
               </Link>
             </p>
@@ -150,7 +149,7 @@ const LoginPage = () => {
 
       <AuthImagePattern
       title={"Solve and Execute Code with Ease"}
-      subtitle={"Signup to access our platform and use our services"}
+      subtitle={"Login to access our platform and use our services"}
       />
 
     </div>

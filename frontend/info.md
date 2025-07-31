@@ -32,3 +32,17 @@
 20. After building the left side start the right side of the application
 21. To build the right side of the app use "<AuthImagePattern/>"
 22. create a components folder in src
+23. create a file called AuthImagePattern.jsx
+24. this file creates the right side animation part in both login and signup page
+25. Then create the login page UI in the same way just copy paste the signup code
+
+//--------------------------------------------------------------------------------------
+26. After this, install zustand
+27. "npm i axios zustand"
+28. create a new folder in src called store and another folder lib
+29. create "axios.js" in lib and write axios.create there to create a global axios url access
+30. inside the store folder create "useAuthStore.js" use zustand there.
+31. beside the "checkAuth" method in zustand every other method used "Toast" which can be installed as "npm i react-hot-toast" , after this go to app.jsx and use <Toaster/>
+32. What is Toaster? --> basically used to show a popup message(during login , signup etc) used just like "alert" in vanilla js
+33. now import "toast" from react-hot-toast in useAuthStore.js
+34. after completing zustand go to app.jsx
