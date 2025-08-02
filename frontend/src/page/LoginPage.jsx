@@ -5,6 +5,7 @@ import {Link} from "react-router-dom"
 import {Code,Eye,EyeOff,Loader2,Lock,Mail} from "lucide-react"  // adds icons in the application
 import AuthImagePattern from '../components/AuthImagePattern'
 import {z} from "zod"  // for validation
+import { useAuthStore } from '../store/useAuthStore'
 
 
 //-----------------------------------------------------------------------------
@@ -34,14 +35,17 @@ const LoginPage = () => {
     resolver:zodResolver(loginSchema)
   })
 
+  //! the below function is made after making zustand file
   const onSubmit = async (data)=>{
    try {
-    await signup(data)
-    console.log("signup data" , data)
+    await login(data)
+    console.log("login data" , data)
    } catch (error) {
-     console.error("SignUp failed:", error);
+     console.error("login failed:", error);
    }
   }
+
+  const {isLogIn,login}=useAuthStore()
 
 
   return (
@@ -128,8 +132,14 @@ const LoginPage = () => {
             <button
               type="submit"
               className="btn border-3 w-full btn-soft btn-success"
+              disabled={isLogIn}
             > 
-              Login
+              {isLogIn? (
+                <>
+                <Loader2 className="h-5 w-5 animate-spin"/>
+                Loading...
+                </>
+              ):("Login")}
             </button>
           </form>
 

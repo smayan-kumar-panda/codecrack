@@ -46,3 +46,10 @@
 32. What is Toaster? --> basically used to show a popup message(during login , signup etc) used just like "alert" in vanilla js
 33. now import "toast" from react-hot-toast in useAuthStore.js
 34. after completing zustand go to app.jsx
+35. call "authuser, isCheckingAuth, checkauth" from useauthStore.js in app.jsx
+36. similarly call isSignup and signup function from zustand to signUpPage.jsx
+37. same for the login page
+38. change the button , make the button diabled when isSignup and isLogin time, show a loading animation 
+when we they are true otherwise show Signup and login respectively
+39. we will get a cors error now to solve this we go to backend
+40. to check the cors error go to inspect and then network tab in the frontend

@@ -1,6 +1,7 @@
 import express from "express"
 import dotenv from "dotenv"
 import cookieParser from "cookie-parser"
+import cors from "cors"
 
 // importing from routes
 import authRouter from "./routes/auth.route.js"
@@ -16,10 +17,14 @@ const app = express()
 app.use(express.json())
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }))
+app.use(cors(
+    {
+        origin: ["http://localhost:5173"],  // here we can give multiple urls but if we want to accept request from anywhere we can also use *
+        methods: ["GET","POST","PUT","DELETE"],
+        credentials: true
+    }
+))
 
-app.get("/", (req, res) => {
-    res.send("Hello World!")
-})
 
 app.use("/api/v1/auth", authRouter)
 app.use("/api/v1/problem",problemRouter)

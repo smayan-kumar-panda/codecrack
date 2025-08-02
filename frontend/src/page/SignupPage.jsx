@@ -28,6 +28,7 @@ import AuthImagePattern from '../components/AuthImagePattern'
 
 // * zod validation library for robust, schema-driven runtime value validation
 import { z } from "zod" 
+import { useAuthStore } from '../store/useAuthStore'
 // Example: z.string().email().min(3)
 // Return: Zod schema object with validation logic
 
@@ -64,6 +65,7 @@ const SignUpPage = () => {
     resolver: zodResolver(signupSchema) // This signals to use zod-based validation
   })
 
+  //! the below function is made after making zustand file
   // * Function called after successful form validation on submit
   //    - data: { name: string, email: string, password: string }
   //    - Attempts "signup" (assumed async function, not shown)
@@ -78,6 +80,10 @@ const SignUpPage = () => {
       console.error("SignUp failed:", error);
     }
   }
+
+  //------------------------------------------------------------
+
+  const {signup, isSignUp}=useAuthStore()  // called from zustand useAuthStore
 
   // -----------------------------------------------------------
 
@@ -198,8 +204,15 @@ const SignUpPage = () => {
             <button
               type="submit"
               className="btn border-3 w-full btn-soft btn-success"
+              disabled={isSignUp}
             >
-              SignUp
+              {/* when showing isSignup==true then it shows loading otherwise it shows false*/}
+              {isSignUp? (
+                <>
+                <Loader2 className="h-5 w-5 animate-spin" />
+                Loading...
+                </>
+              ):("Sign in")}
               
             </button>
           </form>
