@@ -10,6 +10,8 @@ import { Toaster } from "react-hot-toast";
 import HomePage from "./page/HomePage.jsx";
 import LoginPage from "./page/LoginPage.jsx";
 import SignupPage from "./page/SignupPage.jsx";
+import Layout from "./layout/Layout.jsx";
+
 
 // Zustand store hook for managing auth state and actions
 import { useAuthStore } from "./store/useAuthStore.js";
@@ -91,15 +93,13 @@ function App() {
           element={!authUser ? <SignupPage /> : <Navigate to="/" />}
         />
 
-        {/*
-          Route: "/"
-          - If user is authenticated, show HomePage (protected route)
-          - Otherwise, redirect to login page "/login"
-        */}
-        <Route
-          path="/"
+        {/*Put the  Homepage route in another route called layout*/}
+        <Route path="/" element={<Layout/>}>
+          <Route
+          index
           element={authUser ? <HomePage /> : <Navigate to="/login" />}
-        />
+          />
+        </Route>
 
       </Routes>
     </div>

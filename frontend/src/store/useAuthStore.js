@@ -41,11 +41,11 @@ export const useAuthStore=create((set)=>({
             const res=await axiosInstance.post("/auth/register",data)
             console.log("signup successfull",res.data);
             set({authUser:res.data.user})  // since the backend signup route uses "isLoggedIn" which sets req.user=user so we can access ".user" here same for login 
-            toast.success(res.data.message)  // shows the message we used in res.json
+            toast.success(res.data.message)  // shows the message we used in res.json in backend
         }
         catch(error){
             console.error("Error signing up",error)
-            toast.error("error signing up",error)
+            toast.error("❌ error signing up",error)
         }
         finally{
             set({isSignUp:false})
@@ -61,7 +61,7 @@ export const useAuthStore=create((set)=>({
         }
         catch(error){
             console.error("error loging in user",error)
-            toast.error("error signing in",error)
+            toast.error("❌ error signing in",error)
         }
         finally{
             set({isLogIn:false})
@@ -72,11 +72,11 @@ export const useAuthStore=create((set)=>({
         try{
             const res=await axiosInstance.post("auth/logout")
             set({authUser:null})
-            toast.success("logout successfull")
+            toast.success("✅ logout successfull")
         }
         catch(error){
             console.error("error logging out",error)
-            toast.error("error logging out")
+            toast.error("❌ error logging out")
         }
     }
 

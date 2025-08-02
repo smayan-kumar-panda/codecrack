@@ -8,6 +8,8 @@
 - react-hook-form
 
 # steps of setup-->
+------------------------
+
 1. npm create vite@latest
 2. Then select "./" as project name since we already created the folder
 3. then select "React" and javascript
@@ -36,7 +38,7 @@
 24. this file creates the right side animation part in both login and signup page
 25. Then create the login page UI in the same way just copy paste the signup code
 
-//--------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------
 26. After this, install zustand
 27. "npm i axios zustand"
 28. create a new folder in src called store and another folder lib
@@ -53,3 +55,16 @@
 when we they are true otherwise show Signup and login respectively
 39. we will get a cors error now to solve this we go to backend
 40. to check the cors error go to inspect and then network tab in the frontend
+41. after solving the cors issue the backend-frontend auth connection is completed.
+
+---------------------------------------------------------------------------------------
+42. now we can design and build the homepage of the application.
+43. go to app.jsx and change something
+44. put the "Homepage.jsx" in the <Layout/> route
+45. Then create a layout folder and inside the layout folder create Layout.jsx and then use it in the route as a wrapper above the homepage
+46. WHY WE NEED LAYOUT PAGE?- becuase we have to have navigation and footer on everypage this will become a common layout for everypage.
+47. Next, go into the newly created layout.jsx file
+48. call outlet from react-router-dom
+49. create a navbar component and add the ui components in it
+50. after adding the ui components then add the Logout button in components this button when wrapped around something give it the power to logout and addd it to the navbar
+51. after adding the logout button in the navbar then add the navbar in the layout
