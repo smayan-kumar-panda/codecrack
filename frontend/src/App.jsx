@@ -1,110 +1,123 @@
 // ---------------------
 // IMPORTS
 // ---------------------
-// React Router components for defining SPA routes and navigation
+
+// Core React Router components for defining app routes/navigation
 import { Routes, Route, Navigate } from "react-router-dom";
-// Toast notifications popup component
+// Provides toast notification pop-ups for user feedback
 import { Toaster } from "react-hot-toast";
 
-// Importing app view components for routing targets
+// Components corresponding to app views (each is routed to by a URL)
 import HomePage from "./page/HomePage.jsx";
 import LoginPage from "./page/LoginPage.jsx";
 import SignupPage from "./page/SignupPage.jsx";
 import Layout from "./layout/Layout.jsx";
+// AdminRoute is a wrapper for admin-protected routes
+import AdminRoute from "./components/AdminRoute.jsx";
+// Component for admin to add new problems
+import Addproblem from "./page/AddProblem.jsx";
 
-
-// Zustand store hook for managing auth state and actions
+// Custom Zustand store hook for authentication state and actions
 import { useAuthStore } from "./store/useAuthStore.js";
-// React hook to perform side effects (e.g., initial auth check)
+// React hook to run effects like data fetching or initialization
 import { useEffect } from "react";
-// Loader spinner icon from lucide-react icon library for visual loading indicator
+// Spinner icon (animated loading wheel) from lucide-react for UX feedback
 import { Loader2 } from "lucide-react";
-
 
 // ---------------------
 // MAIN APP COMPONENT
 // ---------------------
 function App() {
 
-  // ---------------------
-  // AUTH STORE STATE & ACTIONS
-  // ---------------------
-  // Destructuring from Zustand auth store:
-  // - authUser: Authenticated user object (null if no user logged in)
-  // - checkAuth: Function to verify current user authentication status(in zustand file)
-  // - isCheckingAuth: Boolean flag indicating if auth is being checked currently(in zustand file)
-  const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
+  // ---------------------
+  // AUTH STORE STATE & ACTIONS
+  // ---------------------
+  // Destructure authentication state and logic from Zustand store:
+  //   authUser: current user (or null if logged out)
+  //   checkAuth: function to verify login state (checks session/tokens)
+  //   isCheckingAuth: true during background auth verification
+  const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
 
-  // ---------------------
-  // SIDE EFFECT: RUN AUTH CHECK ON COMPONENT MOUNT
-  // ---------------------
-  useEffect(() => {
-    // Run checkAuth once on component mount (to verify auth/session with backend)
-    checkAuth();
-  }, [checkAuth]); // Dependency array listens for checkAuth function reference change, usually stable
+  // ---------------------
+  // RUN AUTH CHECK ON INITIAL LOAD
+  // ---------------------
+  useEffect(() => {
+    // Check authentication status when component mounts (or checkAuth changes)
+    checkAuth();
+  }, [checkAuth]);
+  // Ensures user authentication is validated whenever the app loads/refreshed
 
-  /**Fires checkAuth() once on mount (or if the function reference changes—rare if Zustand is set up right).
+  // ---------------------
+  // CONDITIONAL LOADER: SHOW WHILE AUTH CHECKING
+  // ---------------------
+  if (!authUser && isCheckingAuth) {
+    // While auth check is in progress and user isn't yet known, show centered spinner
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Loader2 className="size-10 animate-spin" />
+      </div>
+    );
+  }
 
-   //* This ensures the app always checks if the user is still authenticated when loaded/refreshed. */
+  // ---------------------
+  // MAIN UI: APP ROUTES AND LAYOUT
+  // ---------------------
+  return (
+    // Root container for overall app layout (flex column for vertical stacking)
+    <div className="flex flex-col items-center justify-start">
+      {/* Renders toast notifications at the top level of the app */}
+      <Toaster />
 
+      {/* Main app route definitions */}
+      <Routes>
+        {/* 
+          /login route:
+          - If not logged in, render LoginPage
+          - If already logged in, redirect to home
+        */}
+        <Route
+          path="/login"
+          element={!authUser ? <LoginPage /> : <Navigate to="/" />}
+        />
 
+        {/* 
+          /signup route:
+          - If not logged in, render SignupPage
+          - If logged in, redirect to home
+        */}
+        <Route
+          path="/signup"
+          element={!authUser ? <SignupPage /> : <Navigate to="/" />}
+        />
 
-  // ---------------------
-  // CONDITIONAL LOADER WHILE AUTH STATUS IS BEING VERIFIED
-  // ---------------------
-  if (!authUser && isCheckingAuth) {
-    // Show spinner centered on screen to indicate loading state
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <Loader2 className="size-10 animate-spin" />
-      </div>
-    );
-  }
+        {/* 
+          Homepage under main layout:
+          - Renders HomePage for logged-in users
+          - If not authenticated, redirect to login
+        */}
+        <Route path="/" element={<Layout/>}>
+          <Route
+            index
+            element={authUser ? <HomePage /> : <Navigate to="/login" />}
+          />
+        </Route> 
 
-  // ---------------------
-  // MAIN RETURN: RENDER ROUTES BASED ON AUTH STATE
-  // ---------------------
-  return (
-    // Container div with flex column for vertical layout
-    <div className="flex flex-col items-center justify-start">
-      {/* Toast notification container - enables toast popups */}
-      <Toaster />
+        {/* 
+          /add-problem route (admin protected):
+          - Parent <AdminRoute> ensures only admins reach Addproblem
+          - If not authenticated, redirect to home
+        */}
+        <Route element={<AdminRoute/>}>
+          <Route
+            path="/add-problem"
+            element={authUser ? <Addproblem /> : <Navigate to="/" />}
+          />
+        </Route>
 
-      {/* Route definitions wrapped in React Router `Routes` component */}
-      <Routes>
-
-        {/*
-          Route: "/login"
-          - If user is not authenticated, show LoginPage
-          - If already logged in, redirect to home "/"
-        */}
-        <Route
-          path="/login"
-          element={!authUser ? <LoginPage /> : <Navigate to="/" />}
-        />
-
-        {/*
-          Route: "/signup"
-          - If user is not authenticated, show SignupPage
-          - If already logged in, redirect to home "/"
-        */}
-        <Route
-          path="/signup"
-          element={!authUser ? <SignupPage /> : <Navigate to="/" />}
-        />
-
-        {/*Put the  Homepage route in another route called layout*/}
-        <Route path="/" element={<Layout/>}>
-          <Route
-          index
-          element={authUser ? <HomePage /> : <Navigate to="/login" />}
-          />
-        </Route>
-
-      </Routes>
-    </div>
-  );
+      </Routes>
+    </div>
+  );
 }
 
-// Export the App component as default export for use in main.jsx or entry point
+// Export App component for use in app entry point
 export default App;

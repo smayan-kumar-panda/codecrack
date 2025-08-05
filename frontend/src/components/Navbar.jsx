@@ -7,9 +7,11 @@ import LogoutButton from "./Logout.jsx";
 const Navbar = () => {
   // navbar is shown only when the user is logged in aor signed up
   const { authUser } = useAuthStore();
+
+
   return (
     <nav className="sticky top-0 z-50 w-full py-5">
-      <div className="flex w-full justify-between mx-auto max-w-4xl bg-black/15 shadow-lg shadow-neutral-600/5 backdrop-blur-lg border border-gray-200/10 p-4 rounded-2xl">
+      <div className="flex w-full justify-between mx-auto max-w-4xl bg-black-700/15 shadow-lg shadow-neutral-600/5 backdrop-blur-lg border border-gray-200/10 p-4 rounded-2xl">
         {/* Logo Section */}
         <Link to="/" className="flex items-center gap-3 cursor-pointer">
           <img
@@ -47,6 +49,10 @@ const Navbar = () => {
 
               {/* Common Options */}
               <li>
+                {/* here below the authUser brings all the user data which we get in results 
+                in postman when hitting the /profile route that route had a name, email,
+                password and role info so we can call anything from it
+                 */}
                 <p className="text-base font-semibold">{authUser?.name}</p>
                 <hr className="border-gray-200/10" />
               </li>
@@ -59,8 +65,14 @@ const Navbar = () => {
                   My Profile
                 </Link>
               </li>
+
+              {/* below option can only be accessed by the admins 
+              checks if the user is an admin ir user
+              if the user is an admin then only the below li is shown otherwise no*/}
               {authUser?.role === "ADMIN" && (
                 <li>
+                  {/* before accessing the /addproblem the app.jsx checks again through admin route
+                  if the user is an admin or not*/}
                   <Link
                     to="/add-problem"
                     className="hover:bg-primary hover:text-white text-base font-semibold"

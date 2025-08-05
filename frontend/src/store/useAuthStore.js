@@ -21,7 +21,8 @@ export const useAuthStore=create((set)=>({
             // calls the backend url
             const res=await axiosInstance.get("/auth/check")  // we are calling get request because "/check" route in backend is a get req
             console.log("checkauth response",res.data);
-            set({authUser:res.data.user})  // because in backend we used "req.user" to fetch the user data so here also we will call ".user"
+            set({authUser:res.data.user})  // check the backend auth controller profile controller there we used "user" in res to send back the user data so here we also use res.data.user
+            // because in backend we used "req.user" to fetch the user data so here also we will call ".user"
 
         }
         catch(error){

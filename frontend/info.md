@@ -68,3 +68,33 @@ when we they are true otherwise show Signup and login respectively
 49. create a navbar component and add the ui components in it
 50. after adding the ui components then add the Logout button in components this button when wrapped around something give it the power to logout and addd it to the navbar
 51. after adding the logout button in the navbar then add the navbar in the layout
+52. Now the admins can add problem
+53. we have to create an admin route, go to app.jsx and create a new route
+called adminroute and inside that admin route create a route for add-problem
+54. create a AdminRoute.jsx in components directory
+55. create a Addproblem.jsx file in page directory
+56. in the addproblem create another component called CreateProblemForm.jsx in components
+57. go into CreateProblemForm.jsx and import
+import React from 'react'
+import {useForm,useFieldArray,Controller} from "react-hook-form"
+import { zodResolver } from '@hookform/resolvers/zod'
+import {z} from "zod"
+import {
+    Plus,
+    Trash2,
+    Code2,
+    FileText,
+    Lightbulb,
+    BookOpen,
+    CheckCircle2,
+    Download,
+} from "lucide-react"
+import Editor from "@monaco-editor/react"
+import { useState } from 'react'
+import { axiosInstance } from '../lib/axios'
+import toast from 'react-hot-toast'
+import {Navigate,useNavigate} from "react-router-dom"
+
+58. after this we will install monaco editor because when submitting the question too we have to give the code "npm i @monaco-editor/react" it provides a vs code like editor ide
+59. " npm i monaco-editor"
+60. 
