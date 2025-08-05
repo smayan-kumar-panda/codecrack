@@ -1,81 +1,64 @@
 # CodeCrack 🚀
 
-Welcome to **CodeCrack** – your all-in-one coding practice platform! ,this is a code execution platform to solve DSA problems with ease.
-This project is designed to help users practice coding problems, manage playlists, submit solutions, and track their progress, all with a modern backend built on Node.js, Express, and Prisma.  
-Whether you’re prepping for interviews or just love solving problems, CodeCrack has you covered! 🎯
+![Platform](https://img.shields.io/badge/platform-web-blue) ![Contributions](https://img.shields.io/badge/contributions-welcome-brightgreen) 
+---
+Welcome to **CodeCrack** – your all-in-one coding practice platform! This project helps users practice coding problems with a robust backend and dynamic frontend, ensuring a seamless experience for both developers and users. Whether you're prepping for interviews or just love solving problems, CodeCrack has you covered! 🎯
 
 ---
 
 ## ✨ Features
 
-### 👤 Authentication & User Management
-- **Register & Login:** Secure user registration and login with JWT-based authentication.
-- **Role-based Access:** Admin and user roles for fine-grained permissions.
-- **Session Management:** HTTP-only cookies for secure session handling.
-- **Logout & Auth Check:** Endpoints to log out and verify authentication status.
+### 👨‍💻 Backend Features
 
-### 📝 Problem Management
-- **Create Problems:** Admins can add new coding problems with:
-  - Title, description, difficulty, tags, examples, constraints, code snippets, and reference solutions in multiple languages.
-  - Batch test case validation using Judge0 API.
-- **Update & Delete Problems:** Full CRUD for problems (admin only).
-- **View Problems:** Fetch all problems or a specific problem by ID.
-- **Solved Problems:** Users can view problems they’ve solved.
+- **Authentication & User Management**: Secure user registration and JWT-based authentication.
+- **Role-Based Access**: Admin and user roles for tailored access.
+- **Session Management**: Secure HTTP-only cookies for session handling.
+- **Problem Management**: 
+  - Create problems with tags, examples, and constraints.
+  - Full CRUD support for problem management.
+  - Automated validation using the Judge0 API.
+- **Code Execution & Submission**: 
+  - Execute code against test cases with feedback on execution.
+  - Multi-language solution submissions.
+  - Detailed feedback on code submissions.
 
-### 🧑‍💻 Code Execution & Submission
-- **Run & Submit Code:** Users can execute code against custom or problem test cases using Judge0.
-- **Multi-language Support:** Submit solutions in various programming languages.
-- **Detailed Results:** Get per-testcase feedback (stdout, stderr, memory, time, pass/fail).
-- **Submission History:** Track all your submissions and see which problems you’ve solved.
+### 🌐 Frontend Features
 
-### 📚 Playlists
-- **Create Playlists:** Organize problems into custom playlists.
-- **Add/Remove Problems:** Easily manage problems within playlists.
-- **View Playlists:** Fetch all your playlists or a specific one by ID.
-- **Delete Playlists:** Remove playlists you no longer need.
-
-### 📊 Submissions & Analytics
-- **Submission Count:** See how many times a problem has been attempted.
-- **Submission Details:** Fetch all submissions or filter by problem.
-
-### 🔒 Middleware & Security
-- **Authentication Middleware:** Protects routes and ensures only authorized users can access certain features.
-- **Admin Middleware:** Restricts problem management to admins.
+- **Dynamic UI**: Built with React and TailwindCSS for a smooth user interface.
+- **Real-Time Updates**: Interactive components ensuring live feedback.
+- **Admin Controls**: Easier management of problems and submissions through a rich UI.
+- **Reusable Components**: Leveraging components like Navbar and Forms for a cohesive user experience.
+- **State Management**: Efficiently manage state with Zustand.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Backend:** Node.js, Express.js
-- **Database:** Prisma ORM (with PostgreSQL or your choice)
-- **Code Execution:** Judge0 API integration
-- **Authentication:** JWT, bcrypt, secure cookies
+**Backend**:
+- **Core**: Node.js, Express.js
+- **Database**: PostgreSQL with Prisma ORM
+- **Code Execution**: Judge0 API
+- **Security**: JWT, Bcrypt
 
----
-
-## 🧩 API Overview
-
-- **Auth:** `/api/auth/register`, `/api/auth/login`, `/api/auth/logout`, `/api/auth/check`
-- **Problems:** `/api/problem/create-problem`, `/api/problem/:id`, `/api/problem/update/:id`, `/api/problem/delete/:id`
-- **Code Execution:** `/api/execute-code/`
-- **Submissions:** `/api/submission/get-all-submissions`, `/api/submission/problem/:problemId`
-- **Playlists:** `/api/playlist/`, `/api/playlist/:playlistId`
+**Frontend**:
+- **Framework**: React.js
+- **Styling**: TailwindCSS
+- **State Management**: Zustand
+- **Routing & Forms**: React Router and React Hook Form
 
 ---
 
 ## 🌟 Why CodeCrack?
 
-- **Modern, modular codebase** for easy extension and maintenance.
-- **Rich feature set** for both users and admins.
-- **Real code execution** with Judge0 for a true coding platform experience.
-- **Playlist system** to organize and focus your practice.
-- **Detailed analytics** to track your progress and improve.
+- **Comprehensive Platform**: From problem creation to submission analysis, everything is under one roof.
+- **Modern Stack**: Built using modern technologies ensuring high performance.
+- **User-Friendly UI**: Aesthetically pleasing and intuitive interface.
+- **Contributor Friendly**: Open for improvements and community contributions.
 
 ---
 
 ## 🤝 Contributing
 
-Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
+Pull requests are welcome! For major changes, please discuss in a GitHub issue first to understand the impact.
 
 ---
-
